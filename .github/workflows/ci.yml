@@ -6,6 +6,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        distro: [debian, fedora]
+    name: Build (${{ matrix.distro }})
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -15,4 +19,5 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          tags: tilix
+          file: Dockerfile.${{ matrix.distro }}
+          tags: tilix-${{ matrix.distro }}
