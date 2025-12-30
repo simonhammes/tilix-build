@@ -7,13 +7,9 @@ RUN apt update && \
 		git \
 		libvted-3-dev
 
-WORKDIR /workspace
-
-RUN git clone https://github.com/gnunn1/tilix.git
-
-WORKDIR /workspace/tilix
-
 # https://stackoverflow.com/questions/76231744/how-to-properly-build-tilix
-RUN sed -i 's/-defaultlib=phobos2-ldc,druntime-ldc/-defaultlib=phobos2-ldc,z,druntime-ldc/' /etc/ldc2.conf && \
-	dub build
+RUN sed -i 's/-defaultlib=phobos2-ldc,druntime-ldc/-defaultlib=phobos2-ldc,z,druntime-ldc/' /etc/ldc2.conf
 
+RUN git clone https://github.com/gnunn1/tilix.git && \
+	cd tilix && \
+	dub build
