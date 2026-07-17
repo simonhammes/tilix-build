@@ -6,8 +6,11 @@ RUN dnf install -y \
 		ldc \
 		vte-devel
 
+ARG TILIX_COMMIT_SHA=46b6a7c6b318257bba145d527cbf4a09fa9fbb43
+
 RUN git clone https://github.com/gnunn1/tilix.git && \
 	cd tilix && \
+	git checkout $TILIX_COMMIT_SHA && \
 	# Use static libraries (https://github.com/gnunn1/tilix/issues/2183)
 	sed -i 's/-link-defaultlib-shared=false/-link-defaultlib-shared=true/' dub.json && \
 	dub build
